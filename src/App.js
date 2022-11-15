@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { Component } from 'react'
+import BooksList from './components/BooksList'
+
+class App extends Component {
+
+  constructor() {
+    super()
+    this.state = {
+      books: []
+    }
+
+  }
+
+  componentDidMount() {
+    fetch('https://raw.githubusercontent.com/benoitvallon/100-best-books/master/books.json')
+    .then(response => response.json())
+    .then(books => {
+      this.setState({
+        books: books
+      })
+    })
+  }
+
+  render() {
+    return(
+      <>
+        <BooksList books = {this.state.books} />
+      </>
+    )
+  }
+
+
 }
 
 export default App;
